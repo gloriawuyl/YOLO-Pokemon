@@ -15,7 +15,7 @@ The raw data is a video.
 Use PySceneDetect to split the raw video into scenes. The following command will output scene numbers with corresponding frame number and time code in destination_csv in your current datafolder:
 
 ```
-pyscenedetect -i videopath destination_csv list-scenes
+scenedetect -i videopath detect-content list-scenes
 ```
 
 ## Integrate the raw video into scenes with corresponding frames
