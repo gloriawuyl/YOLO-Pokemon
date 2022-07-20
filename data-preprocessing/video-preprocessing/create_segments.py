@@ -1,15 +1,12 @@
 import os
 import cv2
 import pandas as pd
+import sys
+sys.path.insert(0, '/Users/gloriawu/Desktop/YOLO-Pokemon/src')
+from config import video_dir, scenes_dir, segmentation_dir
 
 from tqdm import tqdm
 
-ROOT_DIR = os.getcwd()
-VIDEO_DIR = os.path.join(ROOT_DIR, "video")
-VIDEO_SEGMENTATION_DIR = os.path.join(ROOT_DIR, "video_segmentation")
-os.makedirs(VIDEO_SEGMENTATION_DIR, exist_ok=True)
-FPS = 23
-SHAPE = (480, 640)
 
 def init_video_writer(destination, index):
     destination_dir = os.path.join(destination, "segment", f"scene_{index}.avi")
@@ -19,9 +16,12 @@ def init_video_writer(destination, index):
     return out
 
 def main():
-    csv_file = pd.read_csv(os.path.join(VIDEO_SEGMENTATION_DIR, "S1E1-Scenes.csv"), skiprows=1)
+    VIDEO_DIR = video_dir
+    os.makedirs(segmentation_dir, exist_ok=True)
+    FPS = 23
+    SHAPE = (480, 640)
+    csv_file = pd.read_csv(scenes_dir, skiprows=1)
 
-    video_dir = os.path.join(VIDEO_DIR, "S1E1.mp4")
     video = cv2.VideoCapture(video_dir)
 
     max_scene = csv_file["Scene Number"].max()
@@ -40,7 +40,7 @@ def main():
         ret, frame = video.read()
         #frame = cv2.resize(frame, SHAPE)
 
-        destination_dir = os.path.join(VIDEO_SEGMENTATION_DIR, "segment", f"scene_{index}")
+        destination_dir = os.path.join(segmentation_dir, "segment", f"scene_{index}")
         if not os.path.exists(destination_dir):
             os.makedirs(destination_dir, exist_ok=True)
 
