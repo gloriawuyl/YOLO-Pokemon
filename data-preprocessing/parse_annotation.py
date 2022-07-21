@@ -1,5 +1,12 @@
 import json
 import os
+import sys, os, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+pparentdir = os.path.dirname(parentdir)
+configdir = os.path.join(pparentdir, 'src')
+sys.path.insert(0, configdir)
+from config import ann_dir,parsed_ann_dir
 
 def parse_annotation(annpath, outpath):
     class_map = {'pokeball': '0', 'Blastoise': '1', 'pikachu': '2', 'Ash': '3', 'Professor': '4', 'Pidgeotto': '5', 'Nidorino': '6', 
@@ -51,6 +58,4 @@ def parse_annotation(annpath, outpath):
                 f.write('\n')
 
 if __name__ == '__main__':
-    output_path = '/mnt/SSD5/gloria/YOLO/darknet/build/darknet/x64/data/obj/'
-    annotation_path = 'ann'
-    parse_annotation(annotation_path, output_path)
+    parse_annotation(ann_dir, parsed_ann_dir)

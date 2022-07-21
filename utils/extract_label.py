@@ -1,21 +1,13 @@
-import os
-
-# path = '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/all_results'
-# path1 = '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/annotation_frame/img'
-# # txt_files = os.listdir(path)
-# txt_files = [f for f in os.listdir(path) if f.endswith('.txt')]
-# print(len(txt_files))
-# txt_files = ['/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/results/image_1341.txt', '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/results/image_10691.txt']
+import sys, os, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+pparentdir = os.path.dirname(parentdir)
+configdir = os.path.join(pparentdir, 'src')
+sys.path.insert(0, configdir)
+from config import inference_result_dir, inference_label_dir, class_map
 
 def extract_label(input_path, output_path, class_map):
-    # path = '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/all_results'
-    # path1 = '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/annotation_frame/img'
-# txt_files = os.listdir(path)
     txt_files = [f for f in os.listdir(input_path) if f.endswith('.txt')]
-
-    # class_map = {'pokeball': '0', 'Blastoise': '1', 'pikachu': '2', 'Ash': '3', 'Professor': '4', 'Pidgeotto': '5', 'Nidorino': '6', 
-    #             'Gengar': '7', 'Onix': '8', 'Squirtle': '9', 'mom': '10', 'Rattata': '11', 'Charmander': '12', 'Charizard': '13', 
-    #             'Balbasaur': '14', 'Zubat': '15', 'Butterfree': '16', 'Ho-oh': '17', 'Raichu': '18', 'Meowth': '19', 'Marowak': '20'}
 
     for file in txt_files:
         lines = []
@@ -63,10 +55,5 @@ def extract_label(input_path, output_path, class_map):
                 f.write('\n')
 
 if __name__ == '__main__':
-    input_path = '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/all_results'
-    output_path = '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/reference_results'
-    class_map = {'pokeball': '0', 'Blastoise': '1', 'pikachu': '2', 'Ash': '3', 'Professor': '4', 'Pidgeotto': '5', 'Nidorino': '6', 
-                'Gengar': '7', 'Onix': '8', 'Squirtle': '9', 'mom': '10', 'Rattata': '11', 'Charmander': '12', 'Charizard': '13', 
-                'Balbasaur': '14', 'Zubat': '15', 'Butterfree': '16', 'Ho-oh': '17', 'Raichu': '18', 'Meowth': '19', 'Marowak': '20'}
-    extract_label(input_path, output_path, class_map)
+    extract_label(inference_result_dir, inference_label_dir, class_map)
             

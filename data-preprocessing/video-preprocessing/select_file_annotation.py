@@ -1,8 +1,12 @@
 import os, shutil
 import numpy as np
-import sys
-sys.path.insert(0, '/Users/gloriawu/Desktop/YOLO-Pokemon/src')
-from config import annotation_dir, segmentation_dir
+import sys, os, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+pparentdir = os.path.dirname(parentdir)
+configdir = os.path.join(pparentdir, 'src')
+sys.path.insert(0, configdir)
+from config import annotation_frames_dir, segmentation_dir
 
 def random_select(infolder, outfolder, num = 2):
     for subfolder in os.listdir(infolder):
@@ -18,5 +22,5 @@ def random_select(infolder, outfolder, num = 2):
 
 
 if __name__ == '__main__':
-    random_select(segmentation_dir, annotation_dir, num = 2)
+    random_select(segmentation_dir, annotation_frames_dir, num = 2)
 

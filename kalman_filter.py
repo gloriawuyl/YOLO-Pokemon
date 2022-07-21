@@ -1,7 +1,13 @@
-import os
 import numpy as np
 import cv2
 import csv
+import sys, os, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+pparentdir = os.path.dirname(parentdir)
+configdir = os.path.join(pparentdir, 'src')
+sys.path.insert(0, configdir)
+from config import inference_image_dir, inference_label_dir, kf_filtered_dir, segmentation_dir
 
 path = "/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/inference_results"
 predictions = os.listdir(path)
@@ -18,23 +24,20 @@ def pos_vel_filter(initial_state):
     kf = cv2.KalmanFilter(7, 4)
     kf.statePre = np.zeros((7,1),dtype=np.float32)
     kf.statePre[:4] = initial_state
-    # print(kf.statePre)
     kf.transitionMatrix = np.array([[1,0,0,0,1,0,0],[0,1,0,0,0,1,0],[0,0,1,0,0,0,1],[0,0,0,1,0,0,0],  [0,0,0,0,1,0,0],[0,0,0,0,0,1,0],[0,0,0,0,0,0,1]], dtype = np.float32)
     kf.measurementMatrix = np.array([[1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],[0,0,0,1,0,0,0]], dtype = np.float32)
     kf.measurementNoiseCov = np.array([[1,0,0,0], [0,1,0,0], [0,0,1,0], [0,0,0,1]], dtype = np.float32)
     kf.measurementNoiseCov[2:,2:] *= 4. #tune this
     kf.errorCovPre=cv2.setIdentity(kf.errorCovPre, .1)
     kf.errorCovPre[4:,4:] *= 3. #smaller
-    # kf.errorCovPre *= 3.
     kf.processNoiseCov = np.array([[1,0,0,0,1,0,0],[0,1,0,0,0,1,0],[0,0,1,0,0,0,1],[0,0,0,1,0,0,0],  [0,0,0,0,1,0,0],[0,0,0,0,0,1,0],[0,0,0,0,0,0,1]], dtype = np.float32)
     kf.processNoiseCov[-1,-1] *= 0.00001
     kf.processNoiseCov[4:,4:] *= 0.00001
-    # print(kf.predict())
     return kf
 
 def extract_ms(file):
     classes, labels, confidence = [], [], []
-    with open('/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/inference_results/'+ file, 'r') as f:
+    with open(os.path.join(inference_label_dir, file), 'r') as f:
         lines = f.readlines()
         if lines:
             for line in lines:
@@ -182,7 +185,7 @@ def draw_imgs(bboxes, filename):
     if bboxes:
         # print(filename)
         name = filename[5:-3] + 'jpg'
-        img = cv2.imread('/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/all_results/'+ name)
+        img = cv2.imread(os.path.join(inference_image_dir, name))
         h, w, _ = img.shape
         for bbox in bboxes:
             # print('the bbox is', bbox)
@@ -195,11 +198,7 @@ def draw_imgs(bboxes, filename):
             x2 = int(x_c * w + (ww/2 * w))
             y2 = int(y_c * h + (hh/2 * h))
             cv2.rectangle(img,(x1,y1),(x2,y2),(255,0,0),3)
-        cv2.imwrite('/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/new_result/'+ name,img)
-
-# track_scene(2043,2107)
-# track_scene(278, 312)
-# track_scene(596, 672)
+        cv2.imwrite(os.path.join(kf_filtered_dir, name),img)
 
 def filter_all():
     # segment_path = "/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/segment"
@@ -209,8 +208,7 @@ def filter_all():
         csvwriter.writerow(headers)
 
     for i in range(1,464):
-    # i = 6
-        scene_path = "/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/segment/scene_" + str(i)
+        scene_path = segmentation_dir + "scene_" + str(i)
         imgs = os.listdir(scene_path)
         for img in imgs:
             if not img.startswith('image'):
@@ -224,7 +222,3 @@ def filter_all():
 
 if __name__ == '__main__':
     filter_all()
-
-# track_scene(1757,1828)
-# track_scene(2043,2107)
-# track_scene(278, 312)
