@@ -10,7 +10,7 @@ sys.path.insert(0, configdir)
 from config import inference_image_dir, inference_label_dir, kf_filtered_dir, segmentation_dir
 
 path = "/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/inference_results"
-predictions = os.listdir(path)
+predictions = os.listdir(inference_label_dir)
 
 def extract_frames(start, end):
     preds = []

@@ -5,7 +5,7 @@ video_dir = "/Users/gloriawu/Desktop/YOLO-Pokemon/data/S1E1.mp4"
 scenes_dir = "/Users/gloriawu/Desktop/YOLO-Pokemon/data/S1E1-Scenes.csv"
 
 # The path to save the frame segmentations
-segmentation_dir = "/Users/gloriawu/Desktop/YOLO-Pokemon/video_segmentation/segment"
+segmentation_dir = "/Users/gloriawu/Desktop/YOLO-Pokemon/video_segmentation/segment/segment"
 
 # The path to save the selected frames for annotation
 annotation_frames_dir = "/Users/gloriawu/Desktop/YOLO-Pokemon/annotation_frame"

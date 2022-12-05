@@ -30,9 +30,9 @@ def inference(image_paths_file, path_to_save_images, obj_dat, yolo_cnf, yolo_wgh
     #     print(result_file)
 
 if __name__ == '__main__':
-    image_paths_file = '/mnt/SSD5/gloria/YOLO/darknet/build/darknet/x64/data/test.txt'
-    path_to_save_images = '/mnt/SSD5/gloria/YOLO/darknet/data/Pokemon/all_results/'
-    obj_dat = "/mnt/SSD5/gloria/YOLO/darknet/build/darknet/x64/data/obj.data"
-    yolo_cnf = "/mnt/SSD5/gloria/YOLO/darknet/cfg/yolo-obj.cfg"
-    yolo_wghts = "/mnt/SSD5/gloria/YOLO/darknet/backup/yolo-obj_20000.weights"
+    image_paths_file = '/Users/gloriawu/Desktop/YOLO-PokemonO/darknet/build/darknet/x64/data/test.txt'
+    path_to_save_images = '/Users/gloriawu/Desktop/YOLO-Pokemon/darknet/data/Pokemon/all_results/'
+    obj_dat = "/Users/gloriawu/Desktop/YOLO-Pokemon/darknet/build/darknet/x64/data/obj.data"
+    yolo_cnf = "/Users/gloriawu/Desktop/YOLO-Pokemon/darknet/cfg/yolo-obj.cfg"
+    yolo_wghts = "/Users/gloriawu/Desktop/YOLO-Pokemon/darknet/backup/yolo-obj_20000.weights"
     inference()

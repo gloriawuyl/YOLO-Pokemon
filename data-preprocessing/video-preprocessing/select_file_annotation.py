@@ -9,6 +9,7 @@ sys.path.insert(0, configdir)
 from config import annotation_frames_dir, segmentation_dir
 
 def random_select(infolder, outfolder, num = 2):
+    print(infolder)
     for subfolder in os.listdir(infolder):
         print(subfolder)
         folder = os.path.join(infolder, subfolder)
