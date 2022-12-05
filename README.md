@@ -1,10 +1,6 @@
 # YOLO-Pokemon
 Using YOLO to detect characters in Pokemon videos.
 
-```diff
-! Need to move certain parameters to config (e.g. in kalman filter)
-```
-
 # Requirements
 
 # How to use the YOLO model with Kalman filtering to detect Pokemon Characters in your video
