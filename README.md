@@ -14,16 +14,16 @@ The raw data is a video.
 ## Specify Configurations
 Fill the paths with your own directory paths in config.py:
 
-video_dir = path of original video
-scenes_dir = path of scene split csv
-segmentation_dir = segmented frames directory
-annotation_frames_dir = path of selected frames per scene
-ann_dir = path of annotated results on the selected frames
-parsed_ann_dir = path of parsed annotation (after running parse_annotation.py)
-inference_result_dir = path of saved terminal and image results for inferencing all the frames (after running inference.py)
-inference_label_dir = path of cleaned YOLO format results of inference (after running extract_label.py)
-kf_filtered_dir = path of images containing results filtered by kalman filter
-class_map = the dictionary mapping the character name to index
+**video_dir** = path of original video \
+**scenes_dir** = path of scene split csv \
+**segmentation_dir** = segmented frames directory \
+**annotation_frames_dir** = path of selected frames per scene \
+**ann_dir** = path of annotated results on the selected frames \
+**parsed_ann_dir** = path of parsed annotation (after running parse_annotation.py) \
+**inference_result_dir** = path of saved terminal and image results for inferencing all the frames (after running inference.py) \
+**inference_label_dir** = path of cleaned YOLO format results of inference (after running extract_label.py) \
+**kf_filtered_dir** = path of images containing results filtered by kalman filter \
+**class_map** = the dictionary mapping the character name to index 
 
 ## Step 1: Split Pokemon video to scenes
 Use PySceneDetect to split the raw video into scenes. The following command will output scene numbers with corresponding frame number and time code in video-Scenes.csv in your current datafolder:
